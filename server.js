@@ -21,9 +21,12 @@ app.use(cookieParser());
 app.use(express.json());
 
 
-
 app.use('/api/login', require('./routes/login'));
 app.use('/api/facilities', require('./routes/facilities'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/logout', require('./routes/logout'));
+
+
 
 app.listen(process.env.PORT, () => {
   console.log(`server running on port ${process.env.PORT}`)
