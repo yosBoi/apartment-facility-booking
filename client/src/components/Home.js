@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import {AuthContext} from '../context/AuthContext';
+import {Link} from 'react-router-dom';
 
 import '../styles/css/home.min.css'
 
@@ -8,13 +9,61 @@ const Home = props => {
 
   return(
     <div className="home">
-      {isAuthenticated ? <h2>Hello, {user}</h2> : null}
+      {isAuthenticated ? <><h2>Hello, {user}</h2><hr/></> : null}
       <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consectetur convallis lacus, venenatis feugiat lorem tempus sed. Ut auctor lorem vitae elit maximus, eget hendrerit diam pulvinar. Nullam nec malesuada neque. Phasellus ornare tellus metus, eu mattis odio mollis vel. Vivamus gravida porttitor enim sed aliquam. Phasellus tristique nec mi in accumsan. Quisque maximus velit nec posuere aliquet. Aliquam fermentum erat non nibh dictum finibus. Etiam in vestibulum tortor. Vestibulum aliquet lacus sapien, eget pellentesque turpis laoreet in. Etiam felis turpis, dignissim eget risus sed, euismod commodo felis. Phasellus pulvinar maximus rutrum. Morbi mollis dapibus aliquam.
-
-Pellentesque imperdiet massa eget felis consectetur vestibulum. Aenean volutpat laoreet blandit. In risus est, bibendum ut purus id, ultrices sollicitudin velit. Phasellus sit amet luctus sapien, tempus ultrices est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis et odio ultrices feugiat. Nam elementum id ante sed mollis.
-
-Nam in neque enim. Nulla sodales, est luctus dapibus ultrices, turpis elit bibendum nunc, eget rhoncus ipsum lacus id lacus. Nulla euismod mi nec imperdiet ultrices. Fusce imperdiet arcu vitae massa elementum varius. Praesent vitae erat sit amet mauris ultrices bibendum eu ac lacus. Etiam eu elit ipsum. Etiam vel sem non ante convallis iaculis a a dolor. Cras facilisis semper mollis. Quisque dui tellus, fringilla non augue eget, tincidunt mattis arcu. Quisque aliquam dictum augue, vel rutrum dui. In tincidunt dui dolor, et blandit ipsum auctor ac. Vestibulum sed libero pellentesque, dictum diam sit amet, congue enim.
+        This is a sample site.
+        <br/>
+        <br/>
+        Users first have to log in through the <Link to='/login'>login-page</Link> (link also in navbar)
+        <br/>
+        <br/>
+        3 sample users have been created and added to the database for testing purposes.
+        <br/>
+        <span>
+          Username: yash
+          <br/>
+          Password: yash
+        </span>
+        <span>
+          Username: test
+          <br/>
+          Password: test
+        </span>
+        <span>
+          Username: test2
+          <br/>
+          Password: test2
+        </span>
+        <br/>
+        Once the user has logged in, the navbar will show additional links and a logout button.
+        <br/>
+        <br/>
+        User can go to the <Link to='/facilities'>facilities-page</Link> to check the non-expired bookings that have already been made by all users (in a tabular form).
+        <br/>
+        There are 4 facilities that the apartment provides: Swimming Pool, Tennis Court, Gym, and Club House.
+        <br/>
+        <br/>
+        Users can also go to the <Link to='/booking'>booking-page</Link> to book any facility for any period of time, with the following constraints:
+        <br/>
+        <br/>
+        1 - Booking cannot be in the past.
+        <br/>
+        2 - End date/time cannot be before starting date/time.
+        <br/>
+        3 - Booking cannot conflict with any other booking already made for that facility.
+        <br/>
+        <br/>
+        If any constraint is broken, the page will show appropriate error for it.
+        <br/>
+        If booking does not break any constraint, the booking will be saved in the database and page will display success message.
+        <br/>
+        <br/>
+        Finally, the logout button will log the user out.
+        <br/>
+        <br/>
+        The <Link to='/facilities'>facilities-page</Link> and the <Link to='/booking'>booking-page</Link> cannot be accessed without logging in first. (redirects to login page)
+        <br/>
+        The <Link to='/login'>login-page</Link> cannot be accessed if user is already logged in. (redirects to home page)
       </p>
     </div>
   

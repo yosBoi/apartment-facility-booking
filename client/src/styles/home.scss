@@ -1,6 +1,23 @@
 .home{
   
   h2,p{
-    margin:30px 5px;
+    margin:30px 10px;
+  }
+
+  a{
+    text-decoration: underline;
+    color: #2a9d8f;
+
+    &:visited{
+      color: #2a9d8f;
+    }
+  }
+
+  span{
+    display: inline-block;
+    margin:20px 40px;
+    padding:20px;
+    border:1px solid #2a9d8f;
+    border-radius: 10px;
   }
 }

@@ -50,7 +50,7 @@ const Booking = props => {
           <option value="Swimming Pool">Swimming Pool</option>
           <option value="Tennis Court">Tennis Court</option>
           <option value="Gym">Gym</option>
-          <option value="ClubHouse">Club House</option>
+          <option value="Club House">Club House</option>
         </select>
         <label>
           From:
