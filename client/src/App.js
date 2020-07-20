@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Reservation from './components/Reservation';
+import Facilities from './components/Facilities';
 
 
 
@@ -19,6 +20,7 @@ function App() {
       <Route exact path="/" component={Home} />
       <UnPrivateRoute path='/login' component={Login}/>
       <PrivateRoute path='/reservation' component={Reservation}/>
+      <PrivateRoute path='/facilities' component={Facilities}/>
     </Router>
   );
 }

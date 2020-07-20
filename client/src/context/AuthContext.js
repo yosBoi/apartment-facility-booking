@@ -13,9 +13,7 @@ export const AuthProvider = (props) => {
 
   //only runs first time because of empty array, checks if user has jwt token in cookies(is authenticated) and sets states accordingly
   useEffect(() => {
-    console.log("a")
     AuthService.isAuthenticated().then(data => {
-      console.log(data)
       setUser(data.username);
       setIsAuthenticated(data.isAuthenticated);
       setIsLoaded(true);

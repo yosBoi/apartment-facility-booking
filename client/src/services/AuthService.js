@@ -20,7 +20,6 @@ export default {
   },
   //just to check if user has jwt token in cookies or not
   isAuthenticated : ()=>{
-    console.log("auth hitting")
       return fetch('/api/auth').then(res=>{
         if(res.status === 200)
           return res.json().then(data => data);

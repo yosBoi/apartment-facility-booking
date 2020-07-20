@@ -46,10 +46,10 @@ const Reservation = props => {
       <form onSubmit={onSubmit}>
         <label htmlFor="facility">Facility</label>
         <select name="facility" id="facility" onChange={facilityOnChange} value={facility} required>
-          <option value="swimmingPool" selected>Swimming Pool</option>
-          <option value="tennisCourt">Tennis Court</option>
-          <option value="gym">Gym</option>
-          <option value="clubHouse">Club House</option>
+          <option value="Swimming Pool" selected>Swimming Pool</option>
+          <option value="Tennis Court">Tennis Court</option>
+          <option value="Gym">Gym</option>
+          <option value="ClubHouse">Club House</option>
         </select>
         <label>
           From:

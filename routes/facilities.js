@@ -46,19 +46,14 @@ router.post('/reserve', async(req,res) => {
     //   }
     // })
 
+    //using for-loop instead of forEach method because forEach cannot be stopped mid-way (return and break cause problems)
+
     for(let i=0; i<pastReservations.length; ++i){
       if((start > Date.parse(pastReservations[i].start) && start < Date.parse(pastReservations[i].end)) || (end > Date.parse(pastReservations[i].start) && end < Date.parse(pastReservations[i].end))){
         conflictFlag=true;
         return res.json({message: {msgBody: `This reservation conflicts with ${pastReservations[i].username}'s reservation of ${pastReservations[i].facility} from [${pastReservations[i].start.toString().slice(0,21)}] to [${pastReservations[i].end.toString().slice(0,21)}]`, error:true}});
       }
     }
-
-    //let a = new Date().t
-    //neither date can be older than current time
-    //end date cannot be before start date
-    //conflict resolution
-
-
 
     // if(conflictFlag){
     //   return res.json({message: {msgBody: `This reservation conflicts with ${reservation.username}'s reservation of ${reservation.facility} from ${Date(reservation.start)} to ${Date(reservation.end)}`, error:true}});
@@ -81,6 +76,44 @@ router.post('/reserve', async(req,res) => {
         }
       })
     }
+  })
+})
+
+router.post('/check', (req, res) => {
+
+  const token = req.cookies.access_token;
+
+  if(!token)
+    return res.status(401).json({message: {msgBody: "Missing JWT token", error:true}});
+  
+  if(!req.body.facility){
+    return res.status(400).json({message: {msgBody: "Incomplete info provided", error:true}});
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, async(err, user) => {
+    if(err)
+      return res.status(400).json({message:{msgBody: "Invalid JWT token", error:true}});
+
+    let filteredReservations = [];
+
+    let allReservations = await Reservation.find({facility: req.body.facility});
+
+    const currentTime = new Date().getTime();
+
+    allReservations.forEach(reservation => {
+      console.log(reservation.start.toString())
+      if(Date.parse(reservation.end) >= currentTime){
+        filteredReservations.push(reservation);
+      } 
+    })
+
+    res.status(200).json({
+      reservations: filteredReservations,
+      message: {
+        msgBody: "Success",
+        error:false
+      }
+    })
   })
 })
 
