@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {Route,Redirect} from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
+//redirects to home page if user already logged in
 const UnPrivateRoute = ({component : Component,...rest})=>{
   const { isAuthenticated } = useContext(AuthContext);
   

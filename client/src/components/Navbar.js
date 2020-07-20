@@ -21,6 +21,7 @@ const Navbar = props => {
 
   }
 
+  //navbar before logging in
   const unauthenticatedNavbar = () =>{
     return(
       <ul className="navbar-elements">
@@ -30,6 +31,7 @@ const Navbar = props => {
     )
   }
 
+  //navbar for logged in users
   const authenticatedNavbar = () => {
     return(
       <ul className="navbar-elements">

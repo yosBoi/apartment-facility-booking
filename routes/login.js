@@ -5,14 +5,17 @@ const User = require('../models/User')
 
 router.post('/', async(req,res) => {
 
+  //if username or password missing
   if(!req.body.username || !req.body.password)
     return res.status(400).json({message: {msgBody: "Incomplete login information provided", error:true}})
   
   let user = await User.findOne({username: req.body.username.toLowerCase()});
 
+  //if user not found in db
   if(!user)
     return res.status(404).json({message:{msgBody: "User doesn't exist", error:true}});
 
+  //if incorrect password
   if(req.body.password != user.password)
     return res.status(401).json({message:{msgBody: "Wrong password", error: true}});
   

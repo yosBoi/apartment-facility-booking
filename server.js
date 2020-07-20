@@ -17,6 +17,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch((err) => console.log(err));
 
 
+//middlewares
 app.use(cookieParser());
 app.use(express.json());
 

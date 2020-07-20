@@ -8,9 +8,11 @@ router.post('/book', async(req,res) => {
 
   const token = req.cookies.access_token;
 
+  //if jwt auth token missing
   if(!token)
     return res.status(401).json({message: {msgBody: "Missing JWT token", error:true}});
   
+  //if req info missing
   if(!req.body.facility || !req.body.start || !req.body.end){
     return res.status(400).json({message: {msgBody: "Incomplete info provided", error:true}});
   }
@@ -21,10 +23,12 @@ router.post('/book', async(req,res) => {
   const start = Date.parse(req.body.start);
   const end = Date.parse(req.body.end);
 
+  //if bookings ends before it starts
   if(end <= start){
     return res.status(400).json({message: {msgBody: "To-date cannot be before/same as From-date", error:true}});
   }
 
+  //if booking in past
   if(start < currentTime || end < currentTime){
     return res.status(400).json({message: {msgBody: "Booking cannot be in the past", error:true}});
   }
@@ -36,6 +40,7 @@ router.post('/book', async(req,res) => {
     
     let pastBookings = await Booking.find({facility: req.body.facility});
 
+    //tracks if conflict with other booking is detected
     let conflictFlag = false;
 
     // pastBookings.forEach(reservation => {
@@ -79,6 +84,7 @@ router.post('/book', async(req,res) => {
   })
 })
 
+//to get a list of bookings already made
 router.post('/check', (req, res) => {
 
   const token = req.cookies.access_token;
@@ -86,6 +92,7 @@ router.post('/check', (req, res) => {
   if(!token)
     return res.status(401).json({message: {msgBody: "Missing JWT token", error:true}});
   
+  //if incomplete info in req
   if(!req.body.facility){
     return res.status(400).json({message: {msgBody: "Incomplete info provided", error:true}});
   }
@@ -107,6 +114,7 @@ router.post('/check', (req, res) => {
     //   } 
     // })
 
+    //to filter out and remove bookings that have already ended
     let filteredBookings = allBookings.map(booking => {
       if(Date.parse(booking.end) >= currentTime){
         return booking;

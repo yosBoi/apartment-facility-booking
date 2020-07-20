@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
+//if token found in user cookies, they dont have to login again
 router.get('/', (req, res) => {
   if(!req.cookies.access_token){
     return res.json({isAuthenticated: false, message: {msgBody: "No access token in cookies", error:true}});

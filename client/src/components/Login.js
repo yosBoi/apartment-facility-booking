@@ -26,9 +26,8 @@ const Login = props => {
       if(data.isAuthenticated){
         authContext.setIsAuthenticated(data.isAuthenticated);
         authContext.setUser(data.username);
-        //console.log("authenticated");
-        //setMessage(data.message); 
-        //redirect
+        
+        //redirect to home (if successful login)
         props.history.push('/');
 
       }

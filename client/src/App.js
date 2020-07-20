@@ -11,8 +11,6 @@ import Facilities from './components/Facilities';
 import './styles/css/global.min.css'
 
 
-//import logo from './logo.svg';
-
 function App() {
   return (
     <Router>
