@@ -3,6 +3,8 @@ import Message from './Message';
 import FacilityService from '../services/FacilityService';
 import DateTimePicker from 'react-datetime-picker';
 
+import '../styles/css/booking.min.css'
+
 
 const Booking = props => {
 
@@ -41,7 +43,7 @@ const Booking = props => {
   }
 
   return (
-    <div>
+    <div className="booking-container">
       <form onSubmit={onSubmit}>
         <label htmlFor="facility">Facility</label>
         <select name="facility" id="facility" onChange={facilityOnChange} value={facility} required>
@@ -52,11 +54,11 @@ const Booking = props => {
         </select>
         <label>
           From:
-          <DateTimePicker onChange={fromDateOnChange} value={fromDate}/>
+          <DateTimePicker className="date-time-picker" onChange={fromDateOnChange} value={fromDate}/>
         </label>
         <label>
           To:
-          <DateTimePicker onChange={toDateOnChange} value={toDate} />
+          <DateTimePicker className="date-time-picker" onChange={toDateOnChange} value={toDate} />
         </label>
         <button type="submit">Submit</button>
       </form>

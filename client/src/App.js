@@ -8,7 +8,7 @@ import Login from './components/Login';
 import Booking from './components/Booking';
 import Facilities from './components/Facilities';
 
-
+import './styles/css/global.min.css'
 
 
 //import logo from './logo.svg';

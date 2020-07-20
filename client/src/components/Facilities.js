@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import Message from './Message';
 import FacilityService from '../services/FacilityService';
 
+import '../styles/css/facilities.min.css';
+
 
 const Facilities = props => {
 
@@ -18,10 +20,15 @@ const Facilities = props => {
   const onSubmit = e => {
     e.preventDefault();
 
+    setMessage({msgBody: "Checking...", error:true})
+
     FacilityService.check({facility})
     .then(data => {
-      setMessage(data.message);
       setBookingData(data.bookings);
+      //display msg only if error
+      if(data.message.error)
+        setMessage(data.message);
+      setMessage(null)
     })
 
   }
@@ -33,35 +40,41 @@ const Facilities = props => {
   }
 
   const Table = () => {
-    return(
-      <table>
-        <thead>
-        <tr>
-          <th>By</th>
-          <th>Facility</th>
-          <th>From</th>
-          <th>To</th>
-        </tr>
-        </thead>
-        <tbody>
-        {bookingData.map(booking => {
-          return (
+    if(bookingData.length === 0){
+      return (
+        <h4>No bookings</h4>
+      )
+    }
+    else{  
+      return(
+        <table>
+          <thead>
           <tr>
-          <td>{booking.username}</td>
-          <td>{booking.facility}</td>
-          <td>{String(parseISOString(booking.start)).slice(0,21)}</td>
-          <td>{String(parseISOString(booking.end)).slice(0,21)}</td>
+            <th>By</th>
+            <th>Facility</th>
+            <th>From</th>
+            <th>To</th>
           </tr>
-          )
-        })}
-        </tbody>
-      </table>
-    )
+          </thead>
+          <tbody>
+          {bookingData.map(booking => {
+            return (
+            <tr key={booking._id}>
+            <td>{booking.username}</td>
+            <td>{booking.facility}</td>
+            <td>{String(parseISOString(booking.start)).slice(0,21)}</td>
+            <td>{String(parseISOString(booking.end)).slice(0,21)}</td>
+            </tr>
+            )
+          })}
+          </tbody>
+        </table>
+      )
+    }
   }
 
   return(
-    <div>
-      {message ? <Message message={message}/> : null}
+    <div className="facilities-container">
       <form onSubmit={onSubmit}>
         <label htmlFor="facility">Facility: </label>
         <select name="facility" id="facility" onChange={facilityOnChange} value={facility} required>
@@ -72,7 +85,9 @@ const Facilities = props => {
         </select>
         <button type="submit">Check</button>
       </form>
+      <hr/>
       <Table />
+      {message ? <Message message={message}/> : null}
     </div>
   )
 }

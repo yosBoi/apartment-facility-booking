@@ -1,6 +1,6 @@
 import React from 'react';
 
-//import '../styles/css/message.min.css';
+import '../styles/css/message.min.css';
 
 // set red-themed css class for error msg and green-themed for success msg
 const getStyle = props => {

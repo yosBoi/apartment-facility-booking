@@ -3,9 +3,7 @@ import AuthService from '../services/AuthService';
 import Message from './Message';
 import {AuthContext} from '../context/AuthContext';
 
-import {Link} from 'react-router-dom'
-
-//import '../styles/css/login.min.css';
+import '../styles/css/login.min.css';
 
 const Login = props => {
   

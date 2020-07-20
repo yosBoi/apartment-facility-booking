@@ -94,16 +94,23 @@ router.post('/check', (req, res) => {
     if(err)
       return res.status(400).json({message:{msgBody: "Invalid JWT token", error:true}});
 
-    let filteredBookings = [];
 
     let allBookings = await Booking.find({facility: req.body.facility});
 
     const currentTime = new Date().getTime();
 
-    allBookings.forEach(booking => {
+
+    // let filteredBookings = [];
+    // allBookings.forEach(booking => {
+    //   if(Date.parse(booking.end) >= currentTime){
+    //     filteredBookings.push(booking);
+    //   } 
+    // })
+
+    let filteredBookings = allBookings.map(booking => {
       if(Date.parse(booking.end) >= currentTime){
-        filteredBookings.push(booking);
-      } 
+        return booking;
+      }
     })
 
     res.status(200).json({

@@ -7,7 +7,8 @@ const BookingSchema = new mongoose.Schema({
   },
   facility: {
     type: String,
-    required: true
+    required: true,
+    enum: ["Swimming Pool", "Tennis Court", "Gym", "ClubHouse"]
   },
   start: {
     type: Date,

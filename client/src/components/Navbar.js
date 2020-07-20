@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import AuthService from '../services/AuthService';
 import {AuthContext} from '../context/AuthContext';
 
-//import '../styles/css/navbar.min.css';
+import '../styles/css/navbar.min.css';
 
 const Navbar = props => {
 
@@ -35,6 +35,7 @@ const Navbar = props => {
       <ul className="navbar-elements">
         <li><Link to="/"> Home </Link></li>
         <li><Link to="/facilities"> Facilities </Link></li>
+        <li><Link to="/booking"> Booking </Link></li>
         <button onClick={onClickLogoutHandler}>
           Logout
         </button>
