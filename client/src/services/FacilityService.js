@@ -1,8 +1,8 @@
 export default {
-  reserve: reservation => {
-    return fetch('/api/facilities/reserve',{
+  book: booking => {
+    return fetch('/api/facilities/book',{
       method: "post",
-      body: JSON.stringify(reservation),
+      body: JSON.stringify(booking),
       headers: {
         'Content-Type': 'application/json'
       }

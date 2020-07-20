@@ -4,7 +4,7 @@ import FacilityService from '../services/FacilityService';
 import DateTimePicker from 'react-datetime-picker';
 
 
-const Reservation = props => {
+const Booking = props => {
 
   const [message, setMessage] = useState(null);
 
@@ -12,11 +12,10 @@ const Reservation = props => {
 
   const [fromDate, setFromDate] = useState(new Date());
 
-  const [facility, setFacility] = useState("swimmingPool");
+  const [facility, setFacility] = useState("Swimming Pool");
 
   const toDateOnChange = date => {
     setToDate(date)
-    console.log(toDate)
   }
 
   const fromDateOnChange = date => {
@@ -30,7 +29,7 @@ const Reservation = props => {
   const onSubmit = e => {
     e.preventDefault();
 
-    FacilityService.reserve({
+    FacilityService.book({
       "facility": facility,
       "start": fromDate,
       "end": toDate
@@ -46,7 +45,7 @@ const Reservation = props => {
       <form onSubmit={onSubmit}>
         <label htmlFor="facility">Facility</label>
         <select name="facility" id="facility" onChange={facilityOnChange} value={facility} required>
-          <option value="Swimming Pool" selected>Swimming Pool</option>
+          <option value="Swimming Pool">Swimming Pool</option>
           <option value="Tennis Court">Tennis Court</option>
           <option value="Gym">Gym</option>
           <option value="ClubHouse">Club House</option>
@@ -66,4 +65,4 @@ const Reservation = props => {
   )
 }
 
-export default Reservation;
+export default Booking;

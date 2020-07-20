@@ -5,9 +5,9 @@ import FacilityService from '../services/FacilityService';
 
 const Facilities = props => {
 
-  const [facility, setFacility] = useState("swimmingPool");
+  const [facility, setFacility] = useState("Swimming Pool");
 
-  const [reservationData, setReservationData] = useState([]);
+  const [bookingData, setBookingData] = useState([]);
 
   const [message, setMessage] = useState(null);
 
@@ -21,7 +21,7 @@ const Facilities = props => {
     FacilityService.check({facility})
     .then(data => {
       setMessage(data.message);
-      setReservationData(data.reservations);
+      setBookingData(data.bookings);
     })
 
   }
@@ -44,14 +44,13 @@ const Facilities = props => {
         </tr>
         </thead>
         <tbody>
-        {reservationData.map(reservation => {
-          console.log(reservation.username)
+        {bookingData.map(booking => {
           return (
           <tr>
-          <td>{reservation.username}</td>
-          <td>{reservation.facility}</td>
-          <td>{String(parseISOString(reservation.start)).slice(0,21)}</td>
-          <td>{String(parseISOString(reservation.end)).slice(0,21)}</td>
+          <td>{booking.username}</td>
+          <td>{booking.facility}</td>
+          <td>{String(parseISOString(booking.start)).slice(0,21)}</td>
+          <td>{String(parseISOString(booking.end)).slice(0,21)}</td>
           </tr>
           )
         })}

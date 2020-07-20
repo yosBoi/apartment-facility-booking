@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const Reservation = require('../models/Reservation');
+const Booking = require('../models/Booking');
 
-router.post('/reserve', async(req,res) => {
+router.post('/book', async(req,res) => {
 
   const token = req.cookies.access_token;
 
@@ -26,7 +26,7 @@ router.post('/reserve', async(req,res) => {
   }
 
   if(start < currentTime || end < currentTime){
-    return res.status(400).json({message: {msgBody: "Reservation cannot be in the past", error:true}});
+    return res.status(400).json({message: {msgBody: "Booking cannot be in the past", error:true}});
   }
 
   jwt.verify(token, process.env.JWT_SECRET, async(err, user) => {
@@ -34,11 +34,11 @@ router.post('/reserve', async(req,res) => {
     if(err)
       return res.status(401).json({message: {msgBody: "Invalid JWT token", error:true}});
     
-    let pastReservations = await Reservation.find({facility: req.body.facility});
+    let pastBookings = await Booking.find({facility: req.body.facility});
 
     let conflictFlag = false;
 
-    // pastReservations.forEach(reservation => {
+    // pastBookings.forEach(reservation => {
     //   if((start > Date.parse(reservation.start) && start < Date.parse(reservation.end)) || (end > Date.parse(reservation.start) && end < Date.parse(reservation.end))){
     //     conflictFlag = true;
     //     console.log("conflict")
@@ -48,10 +48,10 @@ router.post('/reserve', async(req,res) => {
 
     //using for-loop instead of forEach method because forEach cannot be stopped mid-way (return and break cause problems)
 
-    for(let i=0; i<pastReservations.length; ++i){
-      if((start > Date.parse(pastReservations[i].start) && start < Date.parse(pastReservations[i].end)) || (end > Date.parse(pastReservations[i].start) && end < Date.parse(pastReservations[i].end))){
+    for(let i=0; i<pastBookings.length; ++i){
+      if((start > Date.parse(pastBookings[i].start) && start < Date.parse(pastBookings[i].end)) || (end > Date.parse(pastBookings[i].start) && end < Date.parse(pastBookings[i].end))){
         conflictFlag=true;
-        return res.json({message: {msgBody: `This reservation conflicts with ${pastReservations[i].username}'s reservation of ${pastReservations[i].facility} from [${pastReservations[i].start.toString().slice(0,21)}] to [${pastReservations[i].end.toString().slice(0,21)}]`, error:true}});
+        return res.json({message: {msgBody: `This booking conflicts with ${pastBookings[i].username}'s booking of ${pastBookings[i].facility} from [${pastBookings[i].start.toString().slice(0,21)}] to [${pastBookings[i].end.toString().slice(0,21)}]`, error:true}});
       }
     }
 
@@ -59,20 +59,20 @@ router.post('/reserve', async(req,res) => {
     //   return res.json({message: {msgBody: `This reservation conflicts with ${reservation.username}'s reservation of ${reservation.facility} from ${Date(reservation.start)} to ${Date(reservation.end)}`, error:true}});
     // }
     if(!conflictFlag){
-      const newReservation = new Reservation({
+      const newBooking = new Booking({
         username: user.username,
         facility: req.body.facility,
         start: start,
         end: end
       })
 
-      newReservation.save(err => {
+      newBooking.save(err => {
         if(err){
           console.log(err)
-          return res.status(500).json({message: {msgBody: "Server error - cannot save reservation", error:true}});
+          return res.status(500).json({message: {msgBody: "Server error - cannot save booking", error:true}});
         }
         else{
-          res.status(201).json({message: {msgBody: "Reservation successfully created", error: false}});
+          res.status(201).json({message: {msgBody: "Booking successfully created", error: false}});
         }
       })
     }
@@ -94,21 +94,20 @@ router.post('/check', (req, res) => {
     if(err)
       return res.status(400).json({message:{msgBody: "Invalid JWT token", error:true}});
 
-    let filteredReservations = [];
+    let filteredBookings = [];
 
-    let allReservations = await Reservation.find({facility: req.body.facility});
+    let allBookings = await Booking.find({facility: req.body.facility});
 
     const currentTime = new Date().getTime();
 
-    allReservations.forEach(reservation => {
-      console.log(reservation.start.toString())
-      if(Date.parse(reservation.end) >= currentTime){
-        filteredReservations.push(reservation);
+    allBookings.forEach(booking => {
+      if(Date.parse(booking.end) >= currentTime){
+        filteredBookings.push(booking);
       } 
     })
 
     res.status(200).json({
-      reservations: filteredReservations,
+      bookings: filteredBookings,
       message: {
         msgBody: "Success",
         error:false

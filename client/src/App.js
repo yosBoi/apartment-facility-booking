@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
-import Reservation from './components/Reservation';
+import Booking from './components/Booking';
 import Facilities from './components/Facilities';
 
 
@@ -19,7 +19,7 @@ function App() {
       <Navbar/>
       <Route exact path="/" component={Home} />
       <UnPrivateRoute path='/login' component={Login}/>
-      <PrivateRoute path='/reservation' component={Reservation}/>
+      <PrivateRoute path='/booking' component={Booking}/>
       <PrivateRoute path='/facilities' component={Facilities}/>
     </Router>
   );

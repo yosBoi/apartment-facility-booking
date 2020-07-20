@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ReservationSchema = new mongoose.Schema({
+const BookingSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true
@@ -19,4 +19,4 @@ const ReservationSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('Reservation', ReservationSchema);
+module.exports = mongoose.model('Booking', BookingSchema);
