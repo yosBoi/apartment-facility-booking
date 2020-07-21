@@ -25,7 +25,7 @@ router.post('/', async(req,res) => {
     {expiresIn: "12h"}
   );
 
-  res.cookie('access_token', token, {httpOnly: true});
+  res.cookie('access_token', token, {httpOnly: true, sameSite: 'strict'});
 
   res.status(200).json({isAuthenticated: true, username: user.username, message:{msgBody: `User ${user.username} successfully logged in`, error: false}})
 
